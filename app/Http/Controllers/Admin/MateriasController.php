@@ -109,4 +109,7 @@ class MateriasController extends Controller
 
         return view('materias.inscritos', compact('estudiantes', 'materia'));
     }
+    public function examen(Materias $query){
+        
+    }
 }

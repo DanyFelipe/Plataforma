@@ -57,20 +57,5 @@
         </form>
     </div>
 </div>
-<script>
-    let counter = 1;
-
-    function addFields() {
-        let dynamicFields = document.getElementById("dynamic-fields");
-        let newField = `
-        <div>
-            <label for="title${counter + 1}">Tema ${counter + 1}</label>
-            <input type="text" name="title[${counter}][titulo]" id="title${counter}" class="form-control" required>
-        </div>
-    `;
-        dynamicFields.insertAdjacentHTML("beforeend", newField);
-        counter++;
-    }
-</script>
 
 @endsection

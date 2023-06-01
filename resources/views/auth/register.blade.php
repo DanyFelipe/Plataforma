@@ -54,10 +54,10 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                 </div>
-                                <select class="form-select" aria-label="Default select example">
+                                <select name="gender" class="form-select" aria-label="Default select example">
                                     <option selected>Selecciona un género</option>
-                                    <option value="1">Hombre</option>
-                                    <option value="2">Mujer</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
                                 </select>
                             </div>
                         </div>

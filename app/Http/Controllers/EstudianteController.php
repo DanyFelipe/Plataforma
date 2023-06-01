@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Materias;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Examen;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Dompdf\Dompdf;
+use PDF;
 
 class EstudianteController extends Controller
 {
@@ -77,7 +80,7 @@ class EstudianteController extends Controller
         $this->validate($request, $rules, $messages);
 
         $user = User::estudiantes()->findOrFail($id);
-        $data = $request->only('name', 'email', 'date', 'address', 'cedula', 'modality', 'phone');
+        $data = $request->only('name', 'email', 'date', 'address', 'cedula', 'gender', 'modality', 'phone');
         $password = $request->input('password');
 
         if ($password) {
@@ -149,11 +152,65 @@ class EstudianteController extends Controller
         $curso = Materias::find($materia);
         return view('estudiantes.examen', compact('curso'));
     }
-    public function quiz(Request $request,$materia)
+    public function quiz(Request $request, $materia)
     {
         $curso = Materias::find($materia);
         $opcion = $request->input('opcion');
         //dd($curso->name);
-        return view('estudiantes.quiz', compact('curso','opcion'));
+        return view('estudiantes.quiz', compact('curso', 'opcion'));
+    }
+    public function resultado(Request $request)
+    {
+        $materia = $request->input("materia");
+        $respuestasCorrectas = [];
+
+        $usuario = Auth::user();
+        $contador = 0;
+
+        if ($materia == 'Matematicas') {
+            $nombreExamen = "Suma";
+            $respuestasCorrectas = [
+                'pregunta1' => 'D',
+                'pregunta2' => 'B',
+                'pregunta3' => 'D',
+                'pregunta4' => 'A',
+                'pregunta5' => 'C',
+                'pregunta6' => 'C',
+            ];
+        }
+
+        foreach ($respuestasCorrectas as $pregunta => $respuestaCorrecta) {
+            $respuesta = $request->input($pregunta);
+
+            if ($respuesta == $respuestaCorrecta) {
+                $contador++;
+            }
+        }
+        $usuario = Auth::user();
+        $examen = Examen::firstOrCreate(['nombreExamen' => $nombreExamen]);
+        $nota = round(($contador / 6) * 5);
+
+        $usuario->exam()->attach($examen, ['nota' => $nota]);
+
+        return view('estudiantes.pdf', compact('nota', 'nombreExamen', 'materia'));
+    }
+    public function generarCertificado(Request $request)
+    {
+        $nota = $request->input('nota');
+        $nombreExamen = $request->input('nombreExamen');
+
+        $html = view('estudiantes.certificado', compact('nombreExamen','nota'))->render();
+
+        // Crear una instancia de Dompdf
+        $dompdf = new Dompdf();
+
+        // Cargar el contenido HTML en Dompdf
+        $dompdf->loadHtml($html);
+
+        // Renderizar el contenido HTML en PDF
+        $dompdf->render();
+
+        // Generar una respuesta de descarga para el PDF
+        return $dompdf->stream('Certificado.pdf');
     }
 }

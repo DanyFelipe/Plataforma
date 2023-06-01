@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Examen;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'date',
+        'gender',
         'password',
         'cedula',
         'address',
@@ -57,6 +59,10 @@ class User extends Authenticatable
     
     public function courses(){
     return $this->belongsToMany(Materias::class,'materia_user','user_id', 'materia_id');
+    }
+
+    public function exam(){
+        return $this->belongsToMany(Examen::class, 'user_examenes', 'user_id', 'examenes_id');
     }
     
 }

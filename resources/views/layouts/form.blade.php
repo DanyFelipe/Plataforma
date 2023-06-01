@@ -8,7 +8,7 @@
     {{config('app.name')}} | @yield('title')
   </title>
   <!-- Favicon -->
-  <link href="{{asset('img/brand/favicon.png')}}" rel="icon" type="image/png">
+  <link href="{{asset('img/brand/faviconP.png')}}" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -24,7 +24,7 @@
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
       <div class="container px-4">
         <a class="navbar-brand" href="../index.html">
-          <img src="{{asset('img/brand/white.png')}}" />
+          <img src="{{asset('img/brand/logoP.png')}}" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -35,7 +35,7 @@
             <div class="row">
               <div class="col-6 collapse-brand">
                 <a href="../index.html">
-                  <img src="{{asset('img/brand/blue.png')}}">
+                  <img src="{{asset('img/brand/logoP.png')}}">
                 </a>
               </div>
               <div class="col-6 collapse-close">
@@ -71,7 +71,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
               <h1 class="text-white">@yield('title', 'Bienvenidos')</h1>
-              <p class="text-lead text-light">Use these awesome forms to login or create new account in your project for free.</p>
+              <p class="text-lead text-light">Incie sesión o cree una cuenta para ingresar a la plataforma.</p>
             </div>
           </div>
         </div>
